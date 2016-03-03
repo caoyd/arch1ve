@@ -1,0 +1,36 @@
+{% extends "log2chart/log2chart_base.html" %}
+{% block title %}Log To Chart{% endblock %}
+
+{% block js %}
+    <style type="text/css">
+        #rawContent {
+            margin-bottom:10px;
+        }
+    </style>
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'log2chart/js/log2chart.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<h2>Nginx/Apache Log Analysis</h2>
+<p class="text-right">
+    <a href="/portal">Portal</a>
+</p>
+
+
+<div>
+    <form  class="form-inline" method="post" action="upload/" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="file" id="fileUploader" name="uploader" >
+        </div>
+        <button type="submit" class="btn btn-primary btn-xs">Upload</button>
+    </form>
+    <div id="info"></div>
+    <br/>
+    
+</div>
+
+<div id="logData"></div>
+{% endblock %}

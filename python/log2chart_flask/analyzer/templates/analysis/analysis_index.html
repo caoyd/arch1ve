@@ -1,0 +1,27 @@
+{% extends "/base.html" %}
+{% block title %}Analyzer{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ url_for('static',filename='js/analysis.js')}}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <h2>Analysis -> {{headLine}}</h2>
+        <div class='rmenu'>
+            &lt;&ndash;
+            <a href="{{ url_for('index') }}">Home</a>
+        </div> 
+
+        <div id="cacheList"></div>
+<!--
+        <div class='analysis_menu'>
+            <div class='analysis_title'><strong>Analysis for Nginx/Apache access log</strong></div>
+            <a id='per_hour' href="#">Request Per Hour &brvbar;</a>
+            <a id='req_method' href="#">Request Method &brvbar;</a>
+            <a id='status_code' href="#">Status Code &brvbar;</a>
+            <a id='top_ip' href="#">Top 10 Access IP</a>
+        </div>  
+-->
+    </div>
+{% endblock %}

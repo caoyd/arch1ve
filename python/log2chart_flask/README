@@ -1,0 +1,11 @@
+Analysis Type
+
+[common]
+simple
+
+
+[log]
+per_hour
+req_method
+status_code
+top_ip

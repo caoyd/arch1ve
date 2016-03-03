@@ -1,0 +1,22 @@
+#!/bin/bash
+
+
+FILE=$1
+NUM=$2
+
+if [ -e $FILE ];then
+        echo
+        echo -ne "From:\t"
+        /bin/sed -n '1p' $FILE | /usr/bin/awk -F' ' '{print $4}' | /bin/sed 's/\[//g'
+        echo -ne "To:\t"
+        /bin/sed -n '$p' $FILE | /usr/bin/awk -F' ' '{print $4}' | /bin/sed 's/\[//g'
+        echo -e "\nTop 10 access"
+        echo "----------------------"
+
+        #/usr/bin/awk -F' ' '{print $1}' $FILE | /bin/sort | /usr/bin/uniq -c | /bin/sort -nr -k 1 | /usr/bin/awk -F' ' '{print $2,":",$1}' | /usr/bin/head -$NUM
+        /usr/bin/awk -F' ' '{print $1}' $FILE | /bin/sort | /usr/bin/uniq -c | /bin/sort -nr -k 1 | /usr/bin/awk -F' ' '{print $2,":",$1}' 
+        echo -e "\n"
+else
+        echo "File: $FILE not found"
+        exit 0
+fi

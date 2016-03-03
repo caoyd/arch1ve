@@ -1,0 +1,169 @@
+#!/usr/bin/env perl
+###### Creater      Skipper
+###### Function     Unzip Java app,backup,and restart Tomcat
+###### Version      v1.4
+###### Update       2013/06/29
+
+use warnings;
+use strict;
+
+my $APP_DEPLOY_DIR		= "/root/deploy";
+my $APP_BACKUP_DIR		= "/root/backup";
+my $ZIP_BIN				= "/usr/bin/zip";
+my $UNZIP_BIN			= "/usr/bin/unzip";
+my $TOMCAT_START_BIN	= "/opt/tomcat6.0.44/bin/startup.sh";
+my $TOMCAT_STOP_BIN		= "/opt/tomcat6.0.44/bin/shutdown.sh";
+
+my $RET_CODE;
+###### Return code
+###### 00 - "OK"
+###### 01 - "parameter error"
+######
+###### [ backup/unzip error ]
+###### 10 - 	"zip binary not found"
+###### 11 - 	"unzip binary not found"
+###### 12 - 	"backup directory not found"
+###### 13 - 	"no permission to directory"
+######
+###### [ tomcat stopping error ]
+###### 20 - 	"tomcat stop script not found"
+###### 21 - 	"stopping tomcat error"
+######
+###### [ tomcat starting error ]
+###### 30 - 	"tomcat start script not found"
+###### 31 - 	"starting tomcat error"
+######
+###### 40 - 	"undefined error"
+
+
+if($#ARGV < 0 ) {
+	print "01";
+	exit;
+}
+#my $app_name = $ARGV[0];
+#my $zip_name = $ARGV[0];
+#print unzipApp($zip_name),"\n";
+
+my $keyword = $ARGV[0];
+print getPID($keyword),"\n";
+
+##############################
+###### ALL SUBS GO HERE ######
+##############################
+
+sub getTime {
+	my @time = localtime(time);
+	my $year = $time[5] + 1900;
+	my $month = $time[4] + 1;
+	my $formated_time = $year."_".$month."_".$time[3].'.'.$time[2]."_".$time[1]."_".$time[0];
+	return $formated_time;
+}
+
+sub backupApp {
+	if(-x $ZIP_BIN) {
+		my $app_name = shift;
+		my $backup_filename = $app_name.'.'.getTime().".zip";
+
+		if(-w $APP_BACKUP_DIR && -r $APP_DEPLOY_DIR) {
+			chdir $APP_DEPLOY_DIR;
+			system $ZIP_BIN,'-qr',$backup_filename,$app_name ;
+			system '/bin/mv',$backup_filename,$APP_BACKUP_DIR ;
+			return '00';
+		} else {
+			return '13';# "no permission to backup dir"
+		}
+	} else {
+		return '10';# "no zip binary"
+	}
+}
+
+sub unzipApp {
+	if(-x $UNZIP_BIN) {
+		my $app_filename= shift;
+		if(-w $APP_DEPLOY_DIR && -r $APP_BACKUP_DIR) {
+			chdir $APP_BACKUP_DIR;
+			system '/bin/cp',$app_filename,$APP_DEPLOY_DIR ;
+			chdir $APP_DEPLOY_DIR;
+			system $UNZIP_BIN,'-q',$app_filename ;
+			unlink $app_filename;
+			return '00';
+		} else {
+			return '13';# 'no permission to deployment dir"
+		}
+		return 00;
+	} else {
+		return 11;# "no unzip bin"
+	}
+}
+
+###### return running Tomcat's PID
+sub getPID {
+	my $tomcat_keyword = shift; 
+
+	print "[debug] param of (getPID) is $tomcat_keyword\n";
+
+	my $pid_hash;
+	my $PROC_DIR  = "/proc";
+	chdir $PROC_DIR;
+	my @pids = glob "[0-9]*";
+	
+	### assemble pid and cmdline into hash ($pid_hash)
+	foreach(@pids) {
+		open(FH,"$_/cmdline") or die "open $_ cmdline error $!";
+		while(my $line = <FH>) {
+			$pid_hash->{$_} = $line;
+		}
+		close FH;
+	}
+
+	delete $pid_hash->{"$$"}; 
+	foreach (keys %$pid_hash ) {
+		return $_ if $pid_hash->{$_} =~ /$tomcat_keyword/;
+	}
+	return -1;# "no tomcat pid"
+}
+
+
+sub stopTomcat {
+	my $tomcat_pid = getPID(shift);
+
+	###### Detect whether Tomcat is running
+	###### if running stop it or exit this 
+	###### subroutine
+	if($tomcat_pid > 0 ) {
+	###### Tomcat is running
+
+		my $stop_stat =  system "$TOMCAT_STOP_BIN &> /dev/null";
+		
+		print "[debug] stop_stat:$stop_stat\n";
+
+		unless($stop_stat) {
+			return '00';
+		} else {
+		###### zombie tomcat pid,kill it
+			system '/bin/kill','-9',$tomcat_pid ;
+		}
+		
+	} else {
+	###### Tomcat is no running,exit;
+		return '00';#
+	}
+}
+
+
+sub startTomcat {
+	my $tomcat_pid =  getPID(shift);
+
+	print "[debug] in (startTomcat) tomcat pid: $tomcat_pid\n";
+	
+	if($tomcat_pid > 0) {
+	###### Tomcat is running,kill it directly
+		system '/bin/kill','-9',$tomcat_pid ;	
+	} 
+
+	my $start_stat = system "$TOMCAT_START_BIN &> /dev/null";
+	print "[debug] start_stat:$start_stat\n";
+	
+}
+
+

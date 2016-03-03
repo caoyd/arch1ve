@@ -1,0 +1,14 @@
+*. Required Module(s)
+    Net::OpenSSH
+    IO::Pty
+
+*. File Structure
+    warpgate    - Main program
+    TARGET      - Store hosts' information
+    
+    In "target", each line has the format of:
+    IP|SSH_Port|Username|Password
+    
+    The empty line and line begin with "#" is commented out.
+
+*.  Perl version

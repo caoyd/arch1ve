@@ -1,0 +1,31 @@
+{% if rawList %}
+    <div class="flist">
+        <table class="rawTable">
+        {% for f in rawList %}
+            <tr>
+                <td><input type="checkbox" value="{{ f }}"/></td>
+                <td>{{ f }}</td>
+                <td>
+                    <a href="/delete/raw/{{f}}">&nbsp;<img title="delete this file" src='{{url_for("static",filename="image/delete.png")}}'/></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+    <div id="info" class="info">
+    </div>
+    <div class='raw_menu'>
+
+        <!--<a id="rawProcLink" href="#">Process Raw Data to</a>-->
+        <button id="rawProcBtn">Process Selected Raw Data To</button>
+        <select id='typeSel'>
+            <option value="common">Common Data</option>
+            <option value="log">Nginx/Apache Access Log</option>
+        </select>
+    </div> 
+{% else %}
+    <div class="flist">
+        Upload file for analyzing
+    </div>
+{% endif %}
+

@@ -1,0 +1,12 @@
+{% extends "portal/portal_base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <h2>Hello, {{ loginUser }}</h2>
+
+    <ul>Current Apps:
+        <li><a href="/log2chart">Log2chart</a></li>
+        <li><a href="/admin">Admin</a></li>
+        <li><a href="/test">test</a></li>
+    </ul>
+{% endblock %}

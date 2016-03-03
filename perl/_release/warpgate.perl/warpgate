@@ -1,0 +1,130 @@
+#!/usr/bin/perl
+###### Author           Skipper.D
+###### DESCRIPTION      Transport file to or execute script
+######                  on multiple remote hosts
+###### VERSION          v3.2
+###### UPDATE           2015/08/25
+use warnings;
+use strict;
+use File::Basename;
+use Cwd;
+use Net::OpenSSH;
+
+###### Parameter Process ######
+my($FILE,$LANG,$MODE);
+
+if($#ARGV == 0) {
+### teleport 
+    if(-e $ARGV[0]) {
+        $FILE = $ARGV[0];
+        $MODE = 'T';
+    } else {
+        usage('err');
+    }
+} elsif ($#ARGV == 1 && $ARGV[1] =~ /(sh|bash|perl|python)/) {
+### telecommand
+    $FILE = $ARGV[0];
+    $LANG = $ARGV[1];
+    $MODE = 'C';
+} else {
+    usage();
+}
+
+
+###### Main Program ######
+print "Warpgate Initializing...\n\n";
+
+my $TARGET      = "TARGET";
+my $TIME_OUT    = 15;
+my @FAIL_HOST;
+my $RET;
+
+chdir( getcwd."/".dirname($0) );
+open(my $STD_ERR,">>","/dev/null") or die "OPEN STD_ERR ERROR :/"; 
+open(TGT,"<",$TARGET) or die "OPEN TARGET ERROR :/";
+while(<TGT>) {
+    chomp();
+    next if /^#/;
+    next if /^$/;
+
+    my @param = split /\|/,$_;
+    push @param,$FILE; 
+    if($MODE eq 'T') {
+        $RET = teleport(\@param);
+        push(@FAIL_HOST,$RET) if $RET;
+    } else {
+        $RET = telecommand(\@param);
+        push(@FAIL_HOST,$RET) if $RET;
+    }
+}
+
+###### Print Failed HOST(s) At Last ######
+print "\n\n",$#FAIL_HOST+1," Host(s) Failed:\n\n";
+foreach(@FAIL_HOST) {
+    print $_."\n";
+}
+close TGT;
+
+
+############################
+#### ALL SUBS GO HERE ######
+############################
+sub usage {
+    if($#_ > -1) {
+        print "FILE NOT FOUND :/\n";
+    } else {
+        print "TRANSPORT MODE:\n";
+        print "Usage: $0 FileToTransport\n";
+        print "EXECUTION MODE:\n";
+        print "Usage: $0 ScriptToExecute <sh|bash|perl|python>\n";
+    }
+    exit -1;
+}
+
+sub teleport {
+    ### return:
+    ### 0 - success
+    ### ip - fail
+    
+    my $array_ref                       = shift;
+    my($ip,$port,$usr,$psd,$dst,$file)  = @$array_ref;
+    $dst                                =~ s/\/$//;
+    my $dst_file                        = "$dst/$file";
+
+    my $warpgate = Net::OpenSSH->new($ip, port => $port, user => $usr, password => $psd,
+                                    timeout=>$TIME_OUT,master_opts => [-o => "StrictHostKeyChecking=no"],);
+                                    #default_stderr_fh => $STD_ERR);
+    $warpgate->error and return $ip;
+
+    $warpgate->scp_put($file,$dst) or return $ip;
+    print "Transport Completed on $ip\n";
+    return 0;#success
+}
+
+sub telecommand {
+    ### return:
+    ### 0 - success
+    ### ip - fail
+    
+    my $array_ref                       = shift;
+    my($ip,$port,$usr,$psd,$dst,$file)  = @$array_ref;
+    $dst                                =~ s/\/$//;
+    my $dst_file                        = "$dst/$file";
+
+    my $warpgate = Net::OpenSSH->new($ip, port => $port, user => $usr, password => $psd,
+                                    timeout=>$TIME_OUT,master_opts => [-o => "StrictHostKeyChecking=no"],);
+                                    #default_stderr_fh => $STD_ERR);
+    $warpgate->error and return $ip;
+
+    my $output = $warpgate->capture("$LANG $dst_file");
+    if($warpgate->error) {
+        $warpgate->system("rm -rf $dst_file") or return $ip;
+        return $ip;
+    } else {
+        print "Execute Completed on $ip\n";
+        print $output,"\n";
+        print "-------------------------------------\n";
+        #$warpgate->system("rm -rf $dst_file");
+        return 0;#success
+    }
+}

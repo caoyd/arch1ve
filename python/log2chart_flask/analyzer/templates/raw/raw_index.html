@@ -1,0 +1,24 @@
+{% extends "/base.html" %}
+{% block title %}Raw Data{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ url_for('static',filename='js/raw_mng.js')}}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <h2>Raw Data Management</h2>
+        <div class='rmenu'>
+            &lt;&ndash;
+            <a href="{{ url_for('index') }}">Home</a>
+        </div> 
+
+        <div id="rawList"></div>
+        <div>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <input type="file" id="fileUploader" name="fileUploader" >
+                <input type="submit" value="Upload" >
+            </form>
+        </div>
+    </div>
+{% endblock %}

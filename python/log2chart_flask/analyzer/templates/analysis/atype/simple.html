@@ -1,0 +1,54 @@
+<script type="text/javascript">
+    $('#container').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Simple'
+        },
+        subtitle: {
+            text: '{{filename}}',
+            style:  { "color": "#FF0000" }
+        },
+        xAxis: {
+            type : 'category',
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: null,
+            labels: {
+                overflow: 'justify'
+            }
+        },
+      
+        plotOptions: {
+            bar: {
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'top',
+            x: -10,
+            y: 80,
+            floating: true,
+            borderWidth: 1,
+            backgroundColor: ((Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'),
+            shadow: true
+        },
+        credits: {
+            enabled: false
+        },
+        series: [
+            {
+            name:'no idea',
+            data: {{data | safe}}
+            }]
+    });
+</script>

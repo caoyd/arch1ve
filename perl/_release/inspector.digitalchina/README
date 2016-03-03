@@ -1,0 +1,23 @@
+1. Required Module(s)
+	Net::OpenSSH
+	IO::Pty
+
+2. If the user used for probing is not root,
+      user "visudo" command to modify /etc/sudoers
+      
+      a. Add the content below:
+
+      Cmnd_Alias NETWORKING = /bin/netstat
+      %dfhapp ALL=(root)      NOPASSWD: NETWORKING
+
+      b. Comment following line
+      #Defaults    requiretty
+
+3. File Structure
+    inspector.pl    - Main program
+    CONF            - Store hosts' information
+        
+    In "CONF", each line has the format of: 
+    IP|SSH_Port|Username|Password|Class|"Process1","Process2",...
+
+    The empyt line and line begin with "#" is commented out.

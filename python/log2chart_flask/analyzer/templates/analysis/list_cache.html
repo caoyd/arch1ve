@@ -1,0 +1,40 @@
+{% if cacheList %}
+    <div class="flist">
+        <table class="cacheTable">
+        {% for f in cacheList %}
+            <tr>
+                <td><input type="checkbox" value="{{ f }}"></input></td>
+                <td>{{ f }}</td>
+                <td>
+                    <a href="/delete/{{cacheType}}/{{f}}">&nbsp;<img title="delete this data" src='{{url_for("static",filename="image/delete.png")}}'/></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+
+    {% if cacheType == 'common' %}
+        <div class='analysis_menu'>
+            <div class='analysis_title'><strong>Analysis for common data </strong></div>
+            <a id='simple' href="#">Simple&brvbar;</a>
+            <a id='none' href="#">item&brvbar;</a>
+        </div> 
+    {% endif %}
+
+    {% if cacheType == 'log' %}
+        <div class='analysis_menu'>
+            <div class='analysis_title'><strong>Analysis for Nginx/Apache access log</strong></div>
+            <ul>
+            <li><a id='per_hour' href="#">Request Per Hour </a></li>
+            <li><a id='req_method' href="#">Request Method </a></li>
+            <li><a id='status_code' href="#">Status Code </a></li>
+            <li><a id='top_ip' href="#">Top 10 Access IP</a></li>
+        </div> 
+    {% endif %}
+
+    </div>
+{% else %}
+    <div class="flist">
+        No data :/
+    </div>
+{% endif %}
+

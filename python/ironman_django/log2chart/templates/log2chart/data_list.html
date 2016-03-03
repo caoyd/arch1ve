@@ -1,0 +1,36 @@
+{% if dataList %}
+    <div class="dataTable">
+        <table class="table table-hover">
+        {% for f in dataList %}
+            <tr>
+                <td><input type="checkbox" value="{{ f }}"></input></td>
+                <td>{{ f }}</td>
+                <td>
+                    <a href="delete/{{ f }}/"><span title="Delete this data" class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+
+
+    <div class="dropdown">
+        <button class="btn btn-success dropdown-toggle" type="button"
+        id="procBTN" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Analysis for
+            <span class="caret"></span>
+        </button>
+            <ul id="menu" class="dropdown-menu" aria-labelledby="procBTN">
+                <li><a id='per_hour' href="#">Request Per Hour </a></li>
+                <li><a id='req_method' href="#">Request Method </a></li>
+                <li><a id='status_code' href="#">Status Code </a></li>
+                <li><a id='top_ip' href="#">Top 10 Access IP</a></li>
+            </ul>
+    </div>
+
+    </div>
+{% else %}
+    <div class="alert alert-danger">
+        Upload log file for analysis
+    </div>
+{% endif %}
+

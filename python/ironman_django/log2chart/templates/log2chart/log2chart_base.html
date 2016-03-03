@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>{% block title %}{% endblock %}</title>
+
+        {% load staticfiles %}
+
+        <link rel="stylesheet" type="text/css" href="{% static 'bootstrap-3.3.6/css/bootstrap.min.css' %}">
+        <script type="text/javascript" src="{% static 'js/jquery-1.11.3.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'bootstrap-3.3.6/js/bootstrap.min.js' %}"></script>
+        {% block js %}
+        {% endblock %}
+    </head>
+<body style="margin:10px">
+
+<div class="">
+    {% block content %}{% endblock %}
+</div>
+
+    <p class="text-right">
+        Log2chart&mdash; v1.3
+    </p>
+
+</body>
+</html>
+

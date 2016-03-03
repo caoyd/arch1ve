@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>kit.D | Chart Loader </title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
+        <script type="text/javascript" src="{{ url_for('static',filename='js/jquery-1.11.3.min.js')}}"></script>
+        <script type="text/javascript" src="{{ url_for('static',filename='highcharts/highcharts.js')}}"></script>
+
+        <script type="text/javascript">
+            $(document).ready(function(){
+                var url = window.location.href;
+                var arr = url.split("/");
+                var len = arr.length;
+                var aType,filename,x,ajaxURL;
+
+                aType = arr[len-2];
+                filename = arr[len-1];
+                ajaxURL = "/load_chart/"+aType+"/"+filename;
+
+                $.ajax({
+                    url: ajaxURL, 
+                    type: "GET",
+                    dataType: "html",
+                    beforeSend: function() {
+                        $("#container").html('<span style="font-family:Georgia;font-size:20px;color:#1B58B8;">Processing data...</span>');
+                    },
+
+                    success: function(chart) {
+                        $("#container").html(chart);
+                    },
+
+                    error: function() {
+                        //alert("Error :/");
+                        //location.href = "/analyzer_index";
+                    }
+                });//ajax
+            });
+        </script>
+    </head>
+<body>
+    <div id="container" style="min-width:400px; max-width:666px; min-height:500px; margin:0 auto;"></div>
+    <div class='rmenu'>
+        <a href="{{url_for(backLink)}}">Back</a>
+    </div>
+
+</body>
+</html>
+
