@@ -1,0 +1,17 @@
+% layout 'kit';
+% title 'Kit';
+
+
+<!-- BEGIN RIGHT CONTENT -->
+<div id="right_content" class="span10">
+	<div class="span10">
+		<div id="host_list">
+		</div>
+		<div>
+			<a id="probe_btn" class="btn btn-primary">Probe</a>
+			<a id="state_btn" class="btn btn-info">State Inspect</a>
+		</div>
+	</div>
+</div>
+<!-- END RIGHT CONTENT -->
+<script src="js/home.js" type="text/javascript"></script>

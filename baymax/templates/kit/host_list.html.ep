@@ -1,0 +1,38 @@
+% my $sql;
+% if($stat eq "yes") {
+	% $sql = 'select id,ip,hostname,dist,note,verify from host where verify="'.$stat.'"';
+% } else {
+	% $sql = 'select id,ip,hostname,dist,note,verify from host';
+% }
+% my $sth = db->prepare($sql);
+% $sth->execute;
+
+<table class="table table-striped">
+	<tr>
+		<th></th>
+		<th>IP</th>
+		<th>Hostname</th>
+		<th>Distribution</th>
+		<th>Note</th>
+		<th>Verify</th>
+	</tr>
+	% while (my @result = $sth->fetchrow_array) {
+	<tr>
+		<td>
+			<label class="checkbox">
+				<input name="host_ckb" type="checkbox" value="<%= $result[0] %>">
+				<span class="metro-checkbox"></span>
+			</label>
+		</td>
+		<td><%= $result[1] %></td>
+		<td><%= $result[2] %></td>
+		<td><%= $result[3] %></td>
+		<td><%= $result[4] %></td>
+		% if($result[5] eq "yes") {
+		<td ><span class="label label-success"><%= $result[5] %></span></td>
+		%} else {
+		<td ><span class="label label-warning"><%= $result[5] %></span></td>
+		%}
+	</tr>
+	% }	
+</table>

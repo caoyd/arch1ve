@@ -1,0 +1,17 @@
+% use Time::Piece;
+% my $now = localtime;
+
+<!DOCTYPE html>
+<html>
+<head><title>404</title></head>
+<body>
+	<div align="center" style="font-family:monaco;position:fixed;bottom:170px;right:321px;">
+		<img src="/baymax.png" style="position:fixed;bottom:0;right:0"/>
+		<p>Hello! I am Baymax</p>
+		<p>I've found nothing for you</p>
+		<p>Now is <%= $now->hms %> </p>
+	</div>
+	<img src="/image/baymax.png" style="position:fixed;bottom:0;right:0"/>
+
+</body>
+</html>

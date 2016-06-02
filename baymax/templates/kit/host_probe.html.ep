@@ -1,0 +1,53 @@
+
+<div class="row-fluid">
+	<div class="span4">
+		<!-- BEGIN FORM -->
+		<form class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label">Hostname/IP</label>
+		    	<div class="controls">
+					<input id="ip_html" type="text" class="form-control" placeholder="Hostname or IP address">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">SSH Username</label>
+		    	<div class="controls">
+					<input id="login_usr_html" type="text" class="form-control" placeholder="SSH Username">
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label class="control-label">SSH Password</label>
+		    	<div class="controls">
+					<input id="login_psd_html" type="password" class="form-control" id="ssh_psd" placeholder="SSH Password">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">SSH Port</label>
+		    	<div class="controls">
+					<input id="port_html" type="text" value="22" class="form-control">
+				</div>
+			</div>
+
+			<div class="control-group pull-right">
+		    	<div>
+		      		<button id="host_probe_btn" type="button" class="btn btn-primary">
+					<span class="icon-search-2"></span> Probe Host
+				</button>
+		    	</div>
+		  	</div>
+		</form>
+		<!-- END FORM -->
+	</div><!-- row -->
+	<div class="span10">
+		<hr>
+	</div>
+
+	<div id="info" class="span10">
+		Information About Host
+	</div>
+</div>
+<script src="js/host_probe.js" type="text/javascript"></script>
+

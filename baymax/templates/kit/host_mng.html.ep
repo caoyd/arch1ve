@@ -1,0 +1,121 @@
+	<div class="span12">
+		<form class="form-horizontal">
+			
+			<div class="row-fluid">
+				<div class="control-group span6">
+					<label class="control-label">IP Address</label>
+					<div class="controls">
+						<input id="ip_html" class="form-control" type="text" placeholder="IP address">
+						<span>*</span>
+					</div>
+				</div>
+				<div class="control-group span6">
+					<label class="control-label">Hostname</label>
+					<div class="controls">
+						<input id="hostname_html" class="form-control" type="text" placeholder="Hostname">
+					</div>
+				</div>
+			</div>
+			
+			<div class="row-fluid">
+				<div class="control-group span6">
+					<label class="control-label">Login Username</label>
+					<div class="controls">
+						<input id="login_usr_html" class="form-control" type="text" placeholder="Login username for SSH">
+					</div>
+				</div>
+				<div class="control-group span6">
+					<label class="control-label">Login Password</label>
+					<div class="controls">
+						<input id="login_psd_html" class="form-control" type="password" placeholder="Login password for SSH">
+					</div>
+				</div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="control-group span6">
+					<label class="control-label">SSH Port</label>
+					<div class="controls">
+						<input id="port_html" class="form-control" type="text" value="22" >
+					</div>
+				</div>
+				<div class="control-group span6">
+					<label class="control-label">Linux Distribution</label>
+					<div class="controls">
+						<select id="distr_html" class="form-control">
+							<option>Red Hat</option>
+							<option>CentOS</option>
+							<option>openSUSE</option>
+							<option>Ubuntu</option>
+							<option>Debian</option>
+						</select>
+					</div>
+				</div>
+			</div>
+
+			<div class="row-fluid">
+				<div class="control-group span6">
+					<label class="control-label">Note</label>
+					<div class="controls">
+						<input id="note_html" class="form-control" type="text" placeholder="Something about this host" >
+					</div>
+				</div>
+				<div class="control-group span6">
+					<label class="control-label">&nbsp;</label>
+					<div class="controls">
+						<button id="add_host_btn" type="button" class="btn btn-primary">
+							<span class="icon-plus-2"></span> Add a host 
+						 </button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+	<!--- BEGIN MODAL DEFINITION -->
+	<div id="verify_host_modal" class="modal hide fade">
+		<div class="modal-header">
+			<p class="text-info"><strong>Verification Result:</strong></p>
+		</div>
+		<div id="verify_host_modal_body"class="modal-body">
+		</div>
+		<div class="modal-footer">
+			<button id="verify_ok_btn" class="btn btn-primary" data-dismiss="modal">OK</button>
+		</div>
+	</div>
+	
+	<div id="modify_host_modal" class="modal hide fade">
+		<div class="modal-header">
+			<h3>Modify Host Info</h3>	
+		</div>
+		<div id="modify_host_modal_body" class="modal-body">
+		</div>
+		<div class="modal-footer">
+			<button id="modify_cancel_btn" class="btn" data-dismiss="modal">Cancel</button>
+			<button id="modify_confirm_btn"  class="btn btn-primary">Modify</button>	
+		</div>
+	</div>
+	
+	<div id="delete_host_modal" class="modal hide fade">
+		<div class="modal-header">
+			<h3>You are gonna DELETE a host</h3>
+		</div>
+		<div class="modal-body">
+			<p>Do you want to delete the host with IP address:<strong id="host_to_delete"></strong></p>
+		</div>
+		<div class="modal-footer">
+			<button id="delete_cancel_btn" class="btn" data-dismiss="modal">Nope</button>
+			<button id="delete_confirm_btn"  class="btn btn-primary">Delete it</button>	
+		</div>
+	</div>
+	<!--- END MODAL DEFINITION -->
+	
+
+	<div id="host_list" class="span10"></div>
+	<div class="span10">
+		<a id="verify_host_btn" class="btn btn-success">Verify</a>
+		<a id="modify_host_btn" href="#modify_host_modal" class="btn btn-warning">Modify</a>
+		<a id="delete_host_btn" href="#delete_host_modal" class="btn btn-danger">Delete</a>
+	</div>
+<script src="js/host_mng.js" type="text/javascript"></script>

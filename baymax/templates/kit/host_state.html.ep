@@ -1,0 +1,12 @@
+<!--
+% my $sql;
+% if($stat eq "yes") {
+	% $sql = 'select id,ip,hostname,dist,note,verify from host where verify="'.$stat.'"';
+% } else {
+	% $sql = 'select id,ip,hostname,dist,note,verify from host';
+% }
+% my $sth = db->prepare($sql);
+% $sth->execute;
+-->
+
+<p>this is result page</p>

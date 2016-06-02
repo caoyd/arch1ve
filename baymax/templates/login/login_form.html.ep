@@ -1,0 +1,14 @@
+% layout 'login';
+% title 'Login to toolkit';
+
+%= form_for 'do_login' =>(method => 'POST') => begin
+	%= label_for username => 'Username:'
+	%= text_field 'username'
+	<br />
+
+	%= label_for password=>'Password:'
+	%= password_field 'password'
+	<br />
+
+	%= submit_button 'Login',class => 'btn'
+% end

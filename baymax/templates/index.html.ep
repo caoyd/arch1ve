@@ -1,0 +1,25 @@
+% layout 'default';
+% title 'Login To Kit';
+
+<div class="container-fluid">
+	<div class="row-fluid">
+
+		<!--BEGIN LOGIN FORM-->
+		<div class="span12">
+
+			<form method="post" action="/">
+				<div class="control-group">
+					<label for="username">Username:</label>
+					<input type="text" class="form-control" placeholder="Username" name="username">
+				</div>
+				<div class="control-group">
+					<label for="password">Password</label>
+					<input type="password" class="form-control" name="password" placeholder="Password" name="password">
+				</div>
+				<button type="submit" class="btn">Login</button>
+			</form>
+		</div>
+		<!--END LOGIN FORM-->
+
+	</div>
+</div>

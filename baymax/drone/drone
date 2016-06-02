@@ -1,0 +1,81 @@
+#!/usr/bin/perl
+###### Creater      Skipper
+###### Function     Output information of a host (For webapp)
+###### Version      v1.0
+###### Update       2013/07/06
+
+use warnings;
+use strict;
+
+###### OUTPUT START ######
+my $cpu_model = `grep 'model name' /proc/cpuinfo | uniq`;
+chomp($cpu_model);
+$cpu_model =~ s/(.*)://;
+$cpu_model =~ s/^\s//;
+print "CPU---$cpu_model---";
+
+my $cpu_num = `grep 'processor' /proc/cpuinfo | wc -l`;
+chomp($cpu_num);
+print "CPU Number---$cpu_num---";
+
+my $physical_mem = `cat /proc/meminfo | grep "MemTotal"`;
+$physical_mem =~ s/^MemTotal:\s+([\d.]+)\s.*$/$1/;
+print "Physical Mem---".int(($physical_mem + 0.5)/1024)."MB---";
+
+my $path_var = `echo \$PATH`;
+print "PATH---$path_var"; 
+
+###### OUTPUT END ######
+
+########################
+### ALL SUBS GO HERE ###
+########################
+
+sub getMeminfo {
+	my %memory;
+
+	my $physical_mem = `/usr/bin/free -m | /bin/grep "Mem"`;
+	my $swapResult = `/usr/bin/free -m | /bin/grep "Swap"`;
+
+	my @memInfo;
+	my @swapInfo;
+
+	my @memTmp = split /\s+/,$physical_mem;
+	@memInfo = ($memTmp[1],$memTmp[2],$memTmp[3]);
+	$memory{"memory"} = \@memInfo;
+	
+	my @swap_tmp= split /\s+/,$swapResult;
+	@swapInfo = ($swap_tmp[1],$swap_tmp[2],$swap_tmp[3]);
+	$memory{"swap"} = \@swapInfo;
+
+	return %memory;
+	# This Hash contains
+	# %memory= {
+	# 	"memory" => ["total","used","free"]		
+	#	"swap"   => ["total","used","free"]
+	# }
+}
+
+
+
+sub getDiskInfo {
+	my $key = "/dev/sd";
+
+	my @tmp = `/bin/df -h | /bin/grep $key`;
+	my @info1;
+	my %diskInfo;
+
+	foreach (@tmp) {
+		@info1 = split /\s+/;
+		my @info2 = ($info1[5],$info1[1],$info1[2],$info1[4],$info1[3]);
+		$diskInfo{$info1[0]} = \@info2;
+	}
+	
+	# This Hash contains
+	# %diskInfo= {
+	# 	"/dev/sda1" => ["mountpoint","total","used","usage","avail"]		
+	#	......
+	# }
+
+	return %diskInfo;
+}

@@ -1,0 +1,5 @@
+% if( $result =~ /Success/) {
+	<span class="label label-success"><%= $result %></span>
+% } else {
+	<span class="label label-important"><%= $result %></span>
+% }

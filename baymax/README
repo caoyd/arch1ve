@@ -1,0 +1,34 @@
+======================================================
+PERL archive
+======================================================
+[ Required Modules ]
+
+Mojolicious (need Digest::MD5,Compress::Raw::Zlib,IO::Compress::Gzip)
+Net::OpenSSH
+IO::Pty
+DBI
+DBD::SQLite
+Time::Piece
+
+[UI]
+bootmetro
+http://aozora.github.io/bootmetro/ 
+
+
+[Variable Name]
+HTML
+
+--- navi ---
+host_info_nav
+remote_command_nav
+host_mng_nav
+
+
+[HTML]			[PARAM]				[PERL]
+ip				ip_param			ip
+hostname		hostname_param		hostname
+login_usr		login_usr_param		login_usr
+login_psd		login_psd_param		login_psd
+port			port_param			port
+distr			distr_param			distr
+note			note_param			note

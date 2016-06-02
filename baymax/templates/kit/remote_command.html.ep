@@ -1,0 +1,67 @@
+<!-- BEGIN RIGHT CONTENT -->
+<div class="row-fluid">
+	<div class="span6">
+		<!-- BEGIN FORM -->
+		<form class="form-horizontal">
+			<div class="control-group">
+				<label class="control-label">Hostname/IP</label>
+		    	<div class="controls">
+					<input id="host_ip" type="text" class="form-control span9" placeholder="Hostname or IP address">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">SSH Username</label>
+		    	<div class="controls">
+					<input id="ssh_username" type="text" class="form-control span9" placeholder="SSH Username">
+				</div>
+			</div>
+			
+			<div class="control-group">
+				<label for="ssh_psd" class="control-label">SSH Password</label>
+		    	<div class="controls">
+					<input id="ssh_password" type="password" class="form-control span9" id="ssh_psd" placeholder="SSH Password">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">SSH Port</label>
+		    	<div class="controls">
+					<input id="ssh_port" type="text" value="22" class="form-control span9">
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label">Command</label>
+		    	<div class="controls">
+					<input id="command" type="text" class="form-control span9" placeholder="Command for remote execution">
+				</div>
+			</div>
+			<div class="control-group">
+				<label class="control-label">Upload script</label>
+				<div class="controls">
+					<input type="file">
+				</div>
+			</div>
+
+			<div class="control-group pull-right">
+		    	<div>
+		      		<button id="check_host" type="button" class="btn btn-primary">
+						<span class="icon-rocket"></span> Execute
+					</button>
+		    	</div>
+		  	</div>
+		</form>
+		<!-- END FORM -->
+	</div><!-- row -->
+
+	<div class="span12">
+		<hr>
+	</div>
+	<div id="info" class="span12">
+		Command result
+	</div>
+</div>
+<!-- END RIGHT CONTENT -->
+
+
