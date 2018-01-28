@@ -1,0 +1,32 @@
+[
+  {
+    "level": "第一",
+    "amount": "0-216",
+    "sewage_fee": "0.90",
+    "project_fee": "0.24",
+    "resource_fee": "0.10",
+    "operation_fee": "1.74",
+    "terminal_fee_total": "2.98",
+    "range": [0, 216]
+  },
+{
+    "level": "第二",
+    "amount": "217-300",
+    "sewage_fee": "0.90",
+    "project_fee": "0.24",
+    "resource_fee": "0.10",
+    "operation_fee": "2.61",
+    "terminal_fee_total": "3.85",
+    "range": [217, 300]
+},
+{
+    "level": "第三",
+    "amount": "301以上",
+    "sewage_fee": "0.90",
+    "project_fee": "0.24",
+    "resource_fee": "0.10",
+    "operation_fee": "5.22",
+    "terminal_fee_total": "6.46",
+    "range": [301, -1]
+}
+]
